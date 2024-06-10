@@ -1,0 +1,18 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model LiveSession {
+  createdAt     DateTime  @default(now())
+  endTime       DateTime?
+  id            String    @id @default(cuid())
+  liveSessionId String?
+  startTime     DateTime?
+  updatedAt     DateTime  @updatedAt
+  userId        String?
+}
