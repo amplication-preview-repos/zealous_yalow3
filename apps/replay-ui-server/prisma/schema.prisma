@@ -1,0 +1,18 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model ReplaySession {
+  createdAt       DateTime @default(now())
+  errorBars       Json?
+  id              String   @id @default(cuid())
+  replaySessionId String?
+  session         String?
+  tabSwitchBars   Json?
+  updatedAt       DateTime @updatedAt
+}
