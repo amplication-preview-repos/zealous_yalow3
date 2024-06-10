@@ -1,0 +1,39 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Session {
+  createdAt         DateTime          @default(now())
+  endTime           DateTime?
+  id                String            @id @default(cuid())
+  networkActivities NetworkActivity[]
+  recordings        Recording[]
+  sessionId         String?
+  startTime         DateTime?
+  updatedAt         DateTime          @updatedAt
+}
+
+model Recording {
+  createdAt    DateTime @default(now())
+  id           String   @id @default(cuid())
+  maskedFields Json?
+  recordingId  String?
+  session      Session? @relation(fields: [sessionId], references: [id])
+  sessionId    String?
+  updatedAt    DateTime @updatedAt
+}
+
+model NetworkActivity {
+  activityData Json?
+  activityId   String?
+  createdAt    DateTime @default(now())
+  id           String   @id @default(cuid())
+  session      Session? @relation(fields: [sessionId], references: [id])
+  sessionId    String?
+  updatedAt    DateTime @updatedAt
+}
